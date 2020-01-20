@@ -12,3 +12,6 @@ class ProductOut(BaseModel):
 class ProductResponse(BaseModel):
     message: str
     product: ProductOut
+class ProductList(BaseModel):
+    message: str
+    products: list[ProductOut]
