@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel,Field
 from typing import Optional
+from app.routes.product import router as product_router
 
 app = FastAPI(title="FastAPI", description="FastAPI", version="0.0.1")
+app.include_router(product_router)
+
 
 @app.get("/")
 def read_root():
@@ -26,6 +29,10 @@ def status():
         "status":"learning"
     }
 
+
+
+
+
 class User(BaseModel):
     username: str = Field(...,min_length=3,max_length=10)
     email: str = Field(...,example="john.doe@example.com")
@@ -47,24 +54,3 @@ def create_user(user: User):
         "user":new_user
     }
 
-class Product(BaseModel):
-    name:str
-    price:int = Field(...,gt=0)
-    in_stock:bool=True
-
-class ProductOut(BaseModel):
-    name:str
-    price:int
-class ProductResponse(BaseModel):
-    message:str
-    product:ProductOut
-
-    
-
-@app.post("/products",response_model=ProductResponse    )
-def create_product(product: Product):
-    new_product = Product(**product.dict())
-    return {
-        "message":"Product created successfully",
-        "product":new_product
-    }
