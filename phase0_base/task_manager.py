@@ -1,3 +1,5 @@
+from operator import index
+
 from task import Task
 from storage import Storage
 
@@ -27,3 +29,7 @@ class TaskManager:
     def complete_task(self, index):
         if 0 <= index < len(self.tasks):
             self.tasks[index].mark_complete()
+            
+    def delete_task(self, index):
+        if 0 <= index < len(self.tasks):
+            del self.tasks[index]

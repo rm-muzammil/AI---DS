@@ -1,4 +1,6 @@
 from pydantic import BaseModel, Field
+from typing import Optional
+
 
 class Product(BaseModel):
     name: str = Field(..., min_length=3)
@@ -15,3 +17,8 @@ class ProductResponse(BaseModel):
 class ProductListResponse(BaseModel):
     message: str
     products: list[ProductOut]
+
+class ProductUpdate(BaseModel):
+    name: Optional[str]
+    price: Optional[int]
+    in_stock: Optional[bool]
